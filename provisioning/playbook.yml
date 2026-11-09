@@ -1,0 +1,6 @@
+---
+- hosts: attackers:targets
+  gather_facts: false
+  tasks:
+    - name: Check that the host answers (no changes made)
+      ansible.builtin.ping:

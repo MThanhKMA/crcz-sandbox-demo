@@ -1,0 +1,39 @@
+name: demo-attack-target
+hosts:
+  - name: attacker
+    base_box:
+      image: debian-12-x86_64
+      mgmt_user: debian
+    flavor: standard.medium
+  - name: target
+    base_box:
+      image: debian-12-x86_64
+      mgmt_user: debian
+    flavor: standard.small
+routers:
+  - name: lab-router
+    base_box:
+      image: debian-12-x86_64
+      mgmt_user: debian
+    flavor: standard.small
+networks:
+  - name: lab-net
+    cidr: 10.10.20.0/24
+net_mappings:
+  - host: attacker
+    network: lab-net
+    ip: 10.10.20.5
+  - host: target
+    network: lab-net
+    ip: 10.10.20.10
+router_mappings:
+  - router: lab-router
+    network: lab-net
+    ip: 10.10.20.1
+groups:
+  - name: attackers
+    nodes:
+      - attacker
+  - name: targets
+    nodes:
+      - target
